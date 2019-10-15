@@ -24,24 +24,24 @@ const Navbar = props => (
           </a>
         </li>
 
-        <li className={`nav-item ${props.category === 'filter' ? 'active' : ''}`}>
-          <a className="nav-link" href="#查询档案">
-            <i className="fa fa-fw fa-search"></i>
-            查询档案
+        <li className={`nav-item ${props.category === 'archive' ? 'active' : ''}`}>
+          <a className="nav-link" href="#档案/查询">
+            <i className="fa fa-fw fa-file-archive-o"></i>
+            档案管理
           </a>
         </li>
 
-        <li className={`nav-item ${props.category === 'append' ? 'active' : ''}`}>
-          <a className="nav-link" href="#转入档案">
-            <i className="fa fa-fw fa-plus"></i>
-            转入档案
+        <li className={`nav-item ${props.category === 'touch' ? 'active' : ''}`}>
+          <a className="nav-link" href="#触摸屏">
+            <i className="fa fa-fw fa-hand-pointer-o"></i>
+            触摸屏查询终端
           </a>
         </li>
 
-        <li className={`nav-item ${props.category === 'remove' ? 'active' : ''}`}>
-          <a className="nav-link" href="#转出档案">
-            <i className="fa fa-fw fa-upload"></i>
-            转出档案
+        <li className={`nav-item ${props.category === 'api-journal' ? 'active' : ''}`}>
+          <a className="nav-link" href="#API调用">
+            <i className="fa fa-fw fa-history"></i>
+            API调用记录
           </a>
         </li>
       </ul>
