@@ -16,7 +16,7 @@ const Search = () => {
 
         <div className="card shadow">
           <div className="card-header">
-            //查询条件
+            查询条件
           </div>
 
           <div className="card-body">
