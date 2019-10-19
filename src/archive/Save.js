@@ -23,6 +23,10 @@ const Save = () => {
     setItem(prev => ({ ...prev, [name]: value }))
   }
 
+  const handleSaveAndCapture = () => {
+    window.console.info(item)
+  }
+
   const handleSave = () => {
     window.console.info(item)
     fetch(`/api/archive/`, {
@@ -49,7 +53,7 @@ const Save = () => {
         <Sidebar />
       </div>
 
-      <div className="col-9">
+      <div className="col-9 col-lg-10">
         <h3 className="text-muted">转入档案</h3>
 
         <hr />
@@ -163,6 +167,11 @@ const Save = () => {
 
           <div className="card-footer">
             <div className="btn-group pull-right">
+              <button type="button" className="btn btn-success" onClick={handleSaveAndCapture}>
+                <i className="fa fa-fw fa-camera"></i>
+                确定并开始扫描档案
+              </button>
+
               <button type="button" className="btn btn-primary" onClick={handleSave}>
                 <i className="fa fa-fw fa-check"></i>
                 确定
