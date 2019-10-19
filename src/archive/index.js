@@ -3,6 +3,7 @@ import { HashRouter, Switch, Route } from 'react-router-dom'
 
 import Title from '../components/Title'
 import Navbar from '../components/Navbar'
+import Save from './Save'
 import Search from './Search'
 
 const Index = () => {
@@ -20,6 +21,7 @@ const Index = () => {
         <div className="container-fluid">
           <Switch>
             <Route path="/档案/查询" component={Search} />
+            <Route path="/档案/转入" component={Save} />
           </Switch>
         </div>
       </>
