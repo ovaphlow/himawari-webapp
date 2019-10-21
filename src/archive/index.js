@@ -5,6 +5,7 @@ import Title from '../components/Title'
 import Navbar from '../components/Navbar'
 import Save from './Save'
 import Search from './Search'
+import Detail from './Detail'
 
 const Index = () => {
   React.useEffect(() => {
@@ -20,8 +21,9 @@ const Index = () => {
 
         <div className="container-fluid">
           <Switch>
-            <Route path="/档案/查询" component={Search} />
-            <Route path="/档案/转入" component={Save} />
+            <Route exact path="/档案/查询" component={Search} />
+            <Route exact path="/档案/转入" component={Save} />
+            <Route path="/档案/:id" component={Detail} />
           </Switch>
         </div>
       </>

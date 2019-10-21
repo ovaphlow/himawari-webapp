@@ -68,6 +68,43 @@ export const List = () => {
 }
 
 export const Save = () => {
+  const [item, setItem] = React.useState({
+    dept_id: 0,
+    username: '',
+    password: '',
+    name: '',
+    remark: '',
+    auth_super: "0"
+  })
+
+  const handleChange = e => {
+    const { value, name } = e.target;
+    setItem(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleSave = () => {
+    if (!!!item.name || !!!item.username) {
+      window.alert('请完整填写所需信息')
+      return
+    }
+    fetch(`/api/user/`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(item)
+    })
+      .then(response => response.json())
+      .then(res => {
+        if (res.message) {
+          window.alert(res.message)
+          return
+        }
+        window.location = '#数据管理/用户'
+      })
+      .catch(err => window.console.error(err))
+  }
+
   return (
     <div className="row mt-3">
       <div className="col-3 col-lg-2">
@@ -91,14 +128,51 @@ export const Save = () => {
                 <label>姓名</label>
                 <input type="text" name="name"
                     className="form-control"
+                    onChange={handleChange}
                 />
               </div>
+            </div>
+
+            <div className="row">
+              <div className="form-group col">
+                <label>用户名</label>
+                <input type="text" name="username"
+                    className="form-control"
+                    onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group col">
+                <label>部门</label>
+                <input type="text" name="dept_id"
+                    className="form-control"
+                    onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="form-group col-3 col-lg-2">
+                <label>权限：管理员</label>
+                <select name="auth_super" className="form-control" onChange={handleChange}>
+                  <option value="0">否</option>
+                  <option value="1">是</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>备注</label>
+              <input type="text" name="remark"
+                  className="form-control"
+                  onChange={handleChange}
+              />
             </div>
           </div>
 
           <div className="card-footer">
             <div className="btn-group pull-right">
-              <button type="button" className="btn btn-primary">
+              <button type="button" className="btn btn-primary" onClick={handleSave}>
                 <i className="fa fa-fw fa-check"></i>
                 确定
               </button>
