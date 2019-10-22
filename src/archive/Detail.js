@@ -26,6 +26,14 @@ const Detail = props => {
 
   const handleUpdate = () => {
     console.info(item)
+    if (!!!item.sn || !!!item.identity || !!!item.name) {
+      window.alert('请完整填写所需信息')
+      return
+    }
+    if (item.identity.length !== 18) {
+      window.alert('身份证格式错误')
+      return
+    }
   }
 
   return (

@@ -23,12 +23,33 @@ const Save = () => {
     setItem(prev => ({ ...prev, [name]: value }))
   }
 
+  const handleIdentityBlur = () => {
+    let b = `${item.identity.slice(6, 10)}-${item.identity.slice(10, 12)}-${item.identity.slice(12, 14)}`
+    setItem(prev => ({ ...prev, birthday: b }))
+    document.getElementById('birthday').value = b
+  }
+
   const handleSaveAndCapture = () => {
     window.console.info(item)
+    if (!!!item.sn || !!!item.identity || !!!item.name) {
+      window.alert('请完整填写所需信息')
+      return
+    }
+    if (item.identity.length !== 18) {
+      window.alert('身份证格式错误')
+      return
+    }
   }
 
   const handleSave = () => {
-    window.console.info(item)
+    if (!!!item.sn || !!!item.identity || !!!item.name) {
+      window.alert('请完整填写所需信息')
+      return
+    }
+    if (item.identity.length !== 18) {
+      window.alert('身份证格式错误')
+      return
+    }
     fetch(`/api/archive/`, {
       method: 'POST',
       headers: {
@@ -83,7 +104,7 @@ const Save = () => {
                 <label>身份证</label>
                 <input type="text" name="identity"
                     className="form-control"
-                    onChange={handleChange}
+                    onChange={handleChange} onBlur={handleIdentityBlur}
                 />
               </div>
 
@@ -97,7 +118,7 @@ const Save = () => {
 
               <div className="form-group col">
                 <label>出生日期</label>
-                <input type="text" name="birthday"
+                <input type="text" name="birthday" id="birthday"
                     className="form-control"
                     onChange={handleChange}
                 />
