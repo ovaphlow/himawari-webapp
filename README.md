@@ -5,7 +5,7 @@
 ## 项目结构
 
 前端 >>>
-[路由](https://github.com/ovaphlow/himawari-koa)(Node.js/koa & gRPC) >>>
+[路由](https://github.com/ovaphlow/himawari-dispatcher)(Node.js/koa & gRPC) >>>
 [数据服务](https://github.com/ovaphlow/himawari-grpc)(Java/gRPC) / 其它服务 >>>
 数据库(PostgresQL 10)
 
