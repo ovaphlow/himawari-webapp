@@ -23,12 +23,11 @@ const Home = () => {
     })
       .then(response => response.json())
       .then(res => {
-        console.info(res)
         if (res.message) {
           window.alert(res.message)
           return
         }
-        //
+        window.location = `#档案/${res.content.id}`
       })
       .catch(err => window.console.error(err))
   }
