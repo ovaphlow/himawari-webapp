@@ -23,6 +23,21 @@ const Toolbar = () => {
 }
 
 export const List = () => {
+  const [list, setList] = React.useState([])
+
+  React.useEffect(() => {
+    fetch(`/api/user/`)
+      .then(response => response.json())
+      .then(res => {
+        if (res.message) {
+          window.alert(res.message)
+          return
+        }
+        setList(res.content)
+      })
+      .catch(err => window.console.error(err))
+  })
+
   return (
     <div className="row mt-3">
       <div className="col-3 col-lg-2">
@@ -57,7 +72,27 @@ export const List = () => {
               </thead>
 
               <tbody>
+                {
+                  list.map(it => (
+                    <tr key={it.id}>
+                      <td>
+                        <a href={`#数据管理/用户/${it.id}`}>
+                          <i className="fa fa-fw fa-edit"></i>
+                        </a>
 
+                        <span className="pull-right">{it.id}</span>
+                      </td>
+                      <td>{it.name}</td>
+                      <td>{it.username}</td>
+                      <td>{it.super === 1 ? '是' : '否'}</td>
+                      <td>
+                        <a href={`#数据管理/操作记录/用户/${it.id}`}>
+                          <i className="fa fa-fw fa-history"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  ))
+                }
               </tbody>
             </table>
           </div>
@@ -67,7 +102,6 @@ export const List = () => {
   )
 }
 
-// 
 export const Save = () => {
   const [item, setItem] = React.useState({
     dept_id: 0,
