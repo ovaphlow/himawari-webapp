@@ -24,8 +24,23 @@ const Detail = props => {
     setItem(prev => ({ ...prev, [name]: value }))
   }
 
+  const handleRemove = () => {
+    if (!!!window.confirm('确定要删除当前数据？')) return
+    fetch(`/api/archive/${item.id}`, {
+      method: 'DELETE'
+    })
+      .then(response => response.json())
+      .then(res => {
+        if (res.message) {
+          window.alert(res.message)
+          return
+        }
+        window.location = '#档案/查询'
+      })
+      .catch(err => window.console.error(err))
+  }
+
   const handleUpdate = () => {
-    console.info(item)
     if (!!!item.sn || !!!item.identity || !!!item.name) {
       window.alert('请完整填写所需信息')
       return
@@ -34,6 +49,22 @@ const Detail = props => {
       window.alert('身份证格式错误')
       return
     }
+    fetch(`/api/archive/${item.id}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(item)
+    })
+      .then(response => response.json())
+      .then(res => {
+        if (res.message) {
+          window.alert(res.message)
+          return
+        }
+        window.location.reload(true)
+      })
+      .catch(err => window.console.error(err))
   }
 
   return (
@@ -155,6 +186,12 @@ const Detail = props => {
           </div>
 
           <div className="card-footer">
+            <div className="btn-group">
+              <button type="button" className="btn btn-danger" onClick={handleRemove}>
+                删除
+              </button>
+            </div>
+
             <div className="btn-group pull-right">
               <button type="button" className="btn btn-primary" onClick={handleUpdate}>
                 <i className="fa fa-fw fa-check"></i>

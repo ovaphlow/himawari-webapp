@@ -26,7 +26,6 @@ const Save = () => {
   const handleIdentityBlur = () => {
     let b = `${item.identity.slice(6, 10)}-${item.identity.slice(10, 12)}-${item.identity.slice(12, 14)}`
     setItem(prev => ({ ...prev, birthday: b }))
-    document.getElementById('birthday').value = b
   }
 
   const handleSaveAndCapture = () => {
@@ -118,7 +117,7 @@ const Save = () => {
 
               <div className="form-group col">
                 <label>出生日期</label>
-                <input type="text" name="birthday" id="birthday"
+                <input type="text" name="birthday" id="birthday" value={item.birthday}
                     className="form-control"
                     onChange={handleChange}
                 />
