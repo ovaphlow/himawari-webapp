@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Sidebar from './components/Sidebar'
+import { DeptPicker } from './Dept'
 
 const Toolbar = () => {
   return (
@@ -33,10 +34,11 @@ export const List = () => {
           window.alert(res.message)
           return
         }
+        console.info(res)
         setList(res.content)
       })
       .catch(err => window.console.error(err))
-  })
+  }, [])
 
   return (
     <div className="row mt-3">
@@ -177,12 +179,8 @@ export const Save = () => {
                 />
               </div>
 
-              <div className="form-group col">
-                <label>部门</label>
-                <input type="text" name="dept_id"
-                    className="form-control"
-                    onChange={handleChange}
-                />
+              <div className="col">
+                <DeptPicker name="dept_id" handleChange={handleChange} />
               </div>
             </div>
 
@@ -211,6 +209,85 @@ export const Save = () => {
                 <i className="fa fa-fw fa-check"></i>
                 确定
               </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export const Update = props => {
+  const [item, setItem] = React.useState(0)
+
+  React.useEffect(() => {
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handleChange = e => {
+    const { value, name } = e.target;
+    setItem(prev => ({ ...prev, [name]: value }))
+  }
+
+  return (
+    <div className="row mt-3">
+      <div className="col-3 col-lg-2">
+        <Sidebar />
+      </div>
+
+      <div className="col-9">
+        <h3 className="text-muted">
+          <i className="fa fa-fw fa-users"></i>
+          用户 - 编辑
+        </h3>
+
+        <hr />
+
+        <Toolbar />
+
+        <div className="card shadow mt-2">
+          <div className="card-body">
+            <div className="row">
+              <div className="form-group col-4">
+                <label>姓名</label>
+                <input type="text" name="name"
+                    className="form-control"
+                    onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="form-group col">
+                <label>用户名</label>
+                <input type="text" name="username"
+                    className="form-control"
+                    onChange={handleChange}
+                />
+              </div>
+
+              <div className="col">
+                <DeptPicker name="dept_id" handleChange={handleChange} />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="form-group col-3 col-lg-2">
+                <label>权限：管理员</label>
+                <select name="auth_super" className="form-control" onChange={handleChange}>
+                  <option value="0">否</option>
+                  <option value="1">是</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>备注</label>
+              <input type="text" name="remark"
+                  className="form-control"
+                  onChange={handleChange}
+              />
             </div>
           </div>
         </div>
