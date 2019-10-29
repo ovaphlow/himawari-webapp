@@ -221,13 +221,55 @@ export const Update = props => {
   const [item, setItem] = React.useState(0)
 
   React.useEffect(() => {
-
+    fetch(`/api/user/${props.match.params.id}`)
+      .then(response => response.json())
+      .then(res => {
+        if (res.message) {
+          window.alert(res.message)
+          return
+        }
+        setItem(res.content)
+      })
+      .catch(err => window.console.error(err))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleChange = e => {
     const { value, name } = e.target;
     setItem(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleRemove = () => {
+    if (!!!window.confirm('确定要删除当前数据？')) return
+    fetch(`/api/user/${item.id}`, {method: 'DELETE'})
+      .then(response => response.json())
+      .then(res => {
+        if (res.message) {
+          window.alert(res.message)
+          return
+        }
+        window.location = '#数据管理/用户'
+      })
+      .catch(err => window.console.error(err))
+  }
+
+  const handleUpdate = () => {
+    fetch(`/api/user/${item.id}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(item)
+    })
+      .then(response => response.json())
+      .then(res => {
+        if (res.message) {
+          window.alert(res.message)
+          return
+        }
+        window.location = '#数据管理/用户'
+      })
+      .catch(err => window.console.error(err))
   }
 
   return (
@@ -251,7 +293,7 @@ export const Update = props => {
             <div className="row">
               <div className="form-group col-4">
                 <label>姓名</label>
-                <input type="text" name="name"
+                <input type="text" name="name" value={item.name}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -261,21 +303,21 @@ export const Update = props => {
             <div className="row">
               <div className="form-group col">
                 <label>用户名</label>
-                <input type="text" name="username"
+                <input type="text" name="username" value={item.username}
                     className="form-control"
                     onChange={handleChange}
                 />
               </div>
 
               <div className="col">
-                <DeptPicker name="dept_id" handleChange={handleChange} />
+                <DeptPicker name="dept_id" value={item.dept_id} handleChange={handleChange} />
               </div>
             </div>
 
             <div className="row">
               <div className="form-group col-3 col-lg-2">
                 <label>权限：管理员</label>
-                <select name="auth_super" className="form-control" onChange={handleChange}>
+                <select name="auth_super" value={item.auth_super} className="form-control" onChange={handleChange}>
                   <option value="0">否</option>
                   <option value="1">是</option>
                 </select>
@@ -284,10 +326,25 @@ export const Update = props => {
 
             <div className="form-group">
               <label>备注</label>
-              <input type="text" name="remark"
+              <input type="text" name="remark" value={item.remark}
                   className="form-control"
                   onChange={handleChange}
               />
+            </div>
+          </div>
+
+          <div className="card-footer">
+            <div className="btn-group">
+              <button type="button" className="btn btn-danger" onClick={handleRemove}>
+                删除
+              </button>
+            </div>
+
+            <div className="btn-group pull-right">
+              <button type="button" className="btn btn-primary" onClick={handleUpdate}>
+                <i className="fa fa-fw fa-check"></i>
+                确定
+              </button>
             </div>
           </div>
         </div>
