@@ -34,7 +34,6 @@ export const List = () => {
           window.alert(res.message)
           return
         }
-        console.info(res)
         setList(res.content)
       })
       .catch(err => window.console.error(err))
