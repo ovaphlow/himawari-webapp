@@ -29,7 +29,6 @@ const Save = () => {
   }
 
   const handleSaveAndCapture = () => {
-    window.console.info(item)
     if (!!!item.sn || !!!item.identity || !!!item.name) {
       window.alert('请完整填写所需信息')
       return
@@ -38,6 +37,22 @@ const Save = () => {
       window.alert('身份证格式错误')
       return
     }
+    fetch(`/api/archive/`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(item)
+    })
+      .then(response => response.json())
+      .then(res => {
+        if (res.message) {
+          window.alert(res.message)
+          return
+        }
+        window.location = `#档案/${res.content}/扫描`
+      })
+      .catch(err => window.console.error(err))
   }
 
   const handleSave = () => {

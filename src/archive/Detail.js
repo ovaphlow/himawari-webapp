@@ -75,8 +75,25 @@ const Detail = props => {
 
       <div className="col-9 col-lg-10">
         <h3 className="text-muted">查看档案</h3>
-
         <hr />
+
+        <div className="row mb-2">
+          <div className="col">
+            <div className="btn-group">
+              <button type="button" className="btn btn-sm btn-outline-warning">
+                <i className="fa fa-fw fa-mail-forward"></i>
+                转出
+              </button>
+            </div>
+
+            <div className="btn-group pull-right">
+              <a href={`#档案/${item.id}/扫描`} className="btn btn-sm btn-outline-success">
+                <i className="fa fa-fw fa-camera"></i>
+                扫描
+              </a>
+            </div>
+          </div>
+        </div>
 
         <div className="card shadow">
           <div className="card-body">
