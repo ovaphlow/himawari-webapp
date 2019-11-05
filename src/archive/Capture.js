@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar'
 /**
  * Windows 10系统下使用Edge测试
  * Chrome, Firefox 可能没有权限
- * @param {*} props 
+ * @param {*} props
  */
 
 const Capture = props => {
@@ -13,7 +13,7 @@ const Capture = props => {
   const [list, setList] = React.useState([])
   const [constraints] = React.useState({
     audio: true,
-    video: {width: 800, height: 600}
+    video: {width: 1280, height: 720}
   })
   const [index, setIndex] = React.useState(0)
   const videoRef = React.createRef()
@@ -59,7 +59,7 @@ const Capture = props => {
 
     //删除对应图像数据
     // ???
-    let li = list
+    let li = list.slice()
     for (let i = 0; i < li.length; i++) {
       if (li[i].id === id) {
         li.splice(i, 1)
@@ -101,7 +101,9 @@ const Capture = props => {
               </div>
             </div>
 
-            <div className="row mt-3 mb-3">
+            <hr />
+
+            <div className="row mt-1 mb-3">
               <div className="col text-center">
                 <div className="btn-group">
                   <button type="button" className="btn btn-info" onClick={handleOpenDevice}>
@@ -121,16 +123,16 @@ const Capture = props => {
               </div>
             </div>
 
-            <div className="row">
+            <div className="row" style={{ display: 'none' }}>
               <div className="col text-center">
                 <canvas id="canvas" width={`${constraints.video.width}px`} height={`${constraints.video.height}px`}></canvas>
               </div>
             </div>
 
-            <div className="row">
+            <div className="row text-center">
               {
                 list.map(it => (
-                  <div className="card col-3 col-lg-2" key={it.id}>
+                  <div className="card m-2" style={{ width: '18rem' }} key={it.id}>
                     <img src={it.data} alt={it.id} className="card-img-top" />
 
                     <div className="card-body text-center">

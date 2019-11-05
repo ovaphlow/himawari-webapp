@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Navbar = props => (
-  <nav className="navbar navbar-expand-sm navbar-dark sticky-top" style={{ marginTop: '-8px' }}>
+  <nav className="navbar navbar-expand-sm navbar-dark sticky-top title-color" style={{ marginTop: '-8px' }}>
     <button
       className="navbar-toggler"
       type="button"
