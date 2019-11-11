@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Sidebar from './components/Sidebar'
+import VaultPicker from '../mds/components/VaultPicker'
 
 const Save = () => {
   const [item, setItem] = React.useState({
@@ -14,8 +15,8 @@ const Save = () => {
     gongling: '',
     yutuixiuriqi: '',
     tuixiuriqi: '',
-    suozaidi: '',
-    remark: ''
+    remark: '',
+    vault_id: 0
   })
 
   const handleChange = e => {
@@ -98,7 +99,7 @@ const Save = () => {
             <div className="row">
               <div className="form-group col-3">
                 <label>档案号</label>
-                <input type="text" name="sn"
+                <input type="text" name="sn" value={item.sn}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -106,7 +107,7 @@ const Save = () => {
 
               <div className="form-group col">
                 <label>附加档案号</label>
-                <input type="text" name="sn_alt"
+                <input type="text" name="sn_alt" value={item.sn_alt}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -116,7 +117,7 @@ const Save = () => {
             <div className="row">
               <div className="form-group col">
                 <label>身份证</label>
-                <input type="text" name="identity"
+                <input type="text" name="identity" value={item.identity}
                     className="form-control"
                     onChange={handleChange} onBlur={handleIdentityBlur}
                 />
@@ -124,7 +125,7 @@ const Save = () => {
 
               <div className="form-group col">
                 <label>姓名</label>
-                <input type="text" name="name"
+                <input type="text" name="name" value={item.name}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -142,7 +143,7 @@ const Save = () => {
             <div className="row">
               <div className="form-group col">
                 <label>参加工作时间</label>
-                <input type="text" name="cangongshijian"
+                <input type="text" name="cangongshijian" value={item.cangongshijian}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -150,7 +151,7 @@ const Save = () => {
 
               <div className="form-group col">
                 <label>职称</label>
-                <input type="text" name="zhicheng"
+                <input type="text" name="zhicheng" value={item.zhicheng}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -158,7 +159,7 @@ const Save = () => {
 
               <div className="form-group col">
                 <label>工龄</label>
-                <input type="text" name="gongling"
+                <input type="text" name="gongling" value={item.gongling}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -168,7 +169,7 @@ const Save = () => {
             <div className="row">
               <div className="form-group col">
                 <label>预退休日期</label>
-                <input type="text" name="yutuixiuriqi"
+                <input type="text" name="yutuixiuriqi" value={item.yutuixiuriqi}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -176,7 +177,7 @@ const Save = () => {
 
               <div className="form-group col">
                 <label>退休日期</label>
-                <input type="text" name="tuixiuriqi"
+                <input type="text" name="tuixiuriqi" value={item.tuixiuriqi}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -184,20 +185,14 @@ const Save = () => {
             </div>
 
             <div className="form-group">
-              <label>档案所在地</label>
-              <input type="text" name="suozaidi"
+              <label>备注</label>
+              <input type="text" name="remark" value={item.remark}
                   className="form-control"
                   onChange={handleChange}
               />
             </div>
 
-            <div className="form-group">
-              <label>备注</label>
-              <input type="text" name="remark"
-                  className="form-control"
-                  onChange={handleChange}
-              />
-            </div>
+            <VaultPicker name="vault_id" value={item.vault_id} handleChange={handleChange} />
           </div>
 
           <div className="card-footer">

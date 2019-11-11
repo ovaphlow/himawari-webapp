@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Sidebar from './components/Sidebar'
+import VaultPicker from '../mds/components/VaultPicker'
 
 const Detail = props => {
   const [item, setItem] = React.useState(0)
@@ -200,6 +201,8 @@ const Detail = props => {
                   onChange={handleChange}
               />
             </div>
+
+            <VaultPicker name="vault_id" value={item.vault_id} handleChange={handleChange} />
           </div>
 
           <div className="card-footer">
