@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar'
 import JournalList from './JournalList'
 import { List as DeptList, Save as DeptSave, Update as DeptUpdate } from './Dept'
 import { List as UserList, Save as UserSave, Update as UserUpdate } from './User'
-import { List as VaultList, Save as VaultSave } from './Vault'
+import { List as VaultList, Save as VaultSave, Update as VaultUpdate } from './Vault'
 
 const Index = () => {
   React.useEffect(() => {
@@ -30,7 +30,8 @@ const Index = () => {
             <Route exact path="/数据管理/部门/新增" component={DeptSave} />
             <Route path="/数据管理/部门/:id" component={DeptUpdate} />
             <Route exact path="/数据管理/档案库" component={VaultList} />
-            <Route path="/数据管理/档案库/新增" component={VaultSave} />
+            <Route exact path="/数据管理/档案库/新增" component={VaultSave} />
+            <Route path="/数据管理/档案库/:id"><VaultUpdate /></Route>
           </Switch>
         </div>
       </>
@@ -39,4 +40,3 @@ const Index = () => {
 }
 
 export default Index
-
