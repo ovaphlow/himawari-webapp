@@ -92,6 +92,11 @@ const Detail = props => {
                 <i className="fa fa-fw fa-camera"></i>
                 扫描
               </a>
+
+              <a href={`#档案/${item.id}/图片`} className="btn btn-sm btn-outline-info">
+                <i className="fa fa-fw fa-image"></i>
+                查看档案图片
+              </a>
             </div>
           </div>
         </div>

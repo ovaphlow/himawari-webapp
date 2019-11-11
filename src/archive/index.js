@@ -7,6 +7,7 @@ import Save from './Save'
 import Filter from './Filter'
 import Detail from './Detail'
 import Capture from './Capture'
+import PictureList from './PictureList'
 
 const Index = () => {
   React.useEffect(() => {
@@ -26,6 +27,7 @@ const Index = () => {
             <Route exact path="/档案/转入" component={Save} />
             <Route exact path="/档案/:id" component={Detail} />
             <Route path="/档案/:id/扫描" component={Capture} />
+            <Route path="/档案/:id/图片" component={PictureList} />
           </Switch>
         </div>
       </>
@@ -34,4 +36,3 @@ const Index = () => {
 }
 
 export default Index
-
