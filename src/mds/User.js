@@ -34,7 +34,6 @@ export const List = () => {
           window.alert(res.message)
           return
         }
-        console.info(res)
         setList(res.content)
       })
       .catch(err => window.console.error(err))
@@ -63,7 +62,7 @@ export const List = () => {
 
           <div className="card-body">
             <table className="table table-hover">
-              <thead className="thead-light">
+              <thead className="thead-dark">
                 <tr>
                   <th>序号</th>
                   <th>姓名</th>
@@ -104,7 +103,7 @@ export const List = () => {
   )
 }
 
-// 
+//
 export const Save = () => {
   const [item, setItem] = React.useState({
     dept_id: 0,
