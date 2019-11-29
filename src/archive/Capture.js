@@ -1,15 +1,15 @@
 import React from 'react'
 
 import Sidebar from './components/Sidebar'
+import Toolbar from './components/Toolbar'
 
 /**
  * Windows 10系统下使用Edge测试
  * Chrome, Firefox 可能没有权限
  * @param {*} props
  */
-
 const Capture = props => {
-  const [item, setItem] = React.useState(0)
+  const [item, setItem] = React.useState({})
   const [list, setList] = React.useState([])
   const [constraints] = React.useState({
     audio: true,
@@ -69,8 +69,19 @@ const Capture = props => {
     }
   }
 
-  const handleUpload = () => {
-    // 从缓存(list)中取得图像数据，上传到服务器
+  const handleUpload = async () => {
+    for (let i = 0; i < list.length; i++) {
+      const response = await fetch(`/api/archive/${item.id}/base64`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({content: list[i].data})
+      })
+      const res = await response.json()
+      if (res.message) window.alert(`第 ${i + 1} 张图像上传失败: ${res.message}`)
+      window.location = `#档案/${item.id}/图片`
+    }
   }
 
   return (
@@ -86,8 +97,12 @@ const Capture = props => {
         <div className="alert alert-warning shadow">
           该功能目前使用base64编码存储图片内容，占用空间及带宽比较大。
           <br />
-          在使用高拍仪厂商SDK时可以使用SDK自带的文件存储功能，大概能节省1/3的带宽及存储空间。
+          在使用高拍仪厂商SDK时可以使用SDK自带的文件存储功能。
+          <br />
+          Windows系统中使用Edge浏览器调用摄像头测试。
         </div>
+
+        <Toolbar id={item.id} />
 
         <div className="card shadow">
           <div className="card-header">

@@ -8,6 +8,7 @@ import Filter from './Filter'
 import Detail from './Detail'
 import Capture from './Capture'
 import PictureList from './PictureList'
+import Picture from './Picture'
 
 const Index = () => {
   React.useEffect(() => {
@@ -27,7 +28,8 @@ const Index = () => {
             <Route exact path="/档案/转入" component={Save} />
             <Route exact path="/档案/:id" component={Detail} />
             <Route path="/档案/:id/扫描" component={Capture} />
-            <Route path="/档案/:id/图片" component={PictureList} />
+            <Route exact path="/档案/:id/图像" component={PictureList} />
+            <Route path="/档案/:master_id/图像/:id"><Picture /></Route>
           </Switch>
         </div>
       </>

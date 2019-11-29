@@ -2,6 +2,7 @@ import React from 'react'
 
 import Sidebar from './components/Sidebar'
 import VaultPicker from '../mds/components/VaultPicker'
+import Toolbar from './components/Toolbar'
 
 const Detail = props => {
   const [item, setItem] = React.useState(0)
@@ -78,35 +79,14 @@ const Detail = props => {
         <h3 className="text-muted">查看档案</h3>
         <hr />
 
-        <div className="row mb-2">
-          <div className="col">
-            <div className="btn-group">
-              <button type="button" className="btn btn-sm btn-outline-warning">
-                <i className="fa fa-fw fa-mail-forward"></i>
-                转出
-              </button>
-            </div>
-
-            <div className="btn-group pull-right">
-              <a href={`#档案/${item.id}/扫描`} className="btn btn-sm btn-outline-success">
-                <i className="fa fa-fw fa-camera"></i>
-                扫描
-              </a>
-
-              <a href={`#档案/${item.id}/图片`} className="btn btn-sm btn-outline-info">
-                <i className="fa fa-fw fa-image"></i>
-                查看档案图片
-              </a>
-            </div>
-          </div>
-        </div>
+        <Toolbar id={item.id} />
 
         <div className="card shadow">
           <div className="card-body">
             <div className="row">
               <div className="form-group col-3">
                 <label>档案号</label>
-                <input type="text" name="sn" value={item.sn}
+                <input type="text" name="sn" value={item.sn || ''}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -114,7 +94,7 @@ const Detail = props => {
 
               <div className="form-group col">
                 <label>附加档案号</label>
-                <input type="text" name="sn_alt" value={item.sn_alt}
+                <input type="text" name="sn_alt" value={item.sn_alt || ''}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -124,7 +104,7 @@ const Detail = props => {
             <div className="row">
               <div className="form-group col">
                 <label>身份证</label>
-                <input type="text" name="identity" value={item.identity}
+                <input type="text" name="identity" value={item.identity || ''}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -132,7 +112,7 @@ const Detail = props => {
 
               <div className="form-group col">
                 <label>姓名</label>
-                <input type="text" name="name" value={item.name}
+                <input type="text" name="name" value={item.name || ''}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -140,7 +120,7 @@ const Detail = props => {
 
               <div className="form-group col">
                 <label>出生日期</label>
-                <input type="text" name="birthday" value={item.birthday}
+                <input type="text" name="birthday" value={item.birthday || ''}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -150,7 +130,7 @@ const Detail = props => {
             <div className="row">
               <div className="form-group col">
                 <label>参加工作时间</label>
-                <input type="text" name="cangongshijian" value={item.cangongshijian}
+                <input type="text" name="cangongshijian" value={item.cangongshijian || ''}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -158,7 +138,7 @@ const Detail = props => {
 
               <div className="form-group col">
                 <label>职称</label>
-                <input type="text" name="zhicheng" value={item.zhicheng}
+                <input type="text" name="zhicheng" value={item.zhicheng || ''}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -166,7 +146,7 @@ const Detail = props => {
 
               <div className="form-group col">
                 <label>工龄</label>
-                <input type="text" name="gongling" value={item.gongling}
+                <input type="text" name="gongling" value={item.gongling || ''}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -176,7 +156,7 @@ const Detail = props => {
             <div className="row">
               <div className="form-group col">
                 <label>预退休日期</label>
-                <input type="text" name="yutuixiuriqi" value={item.yutuixiuriqi}
+                <input type="text" name="yutuixiuriqi" value={item.yutuixiuriqi || ''}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -184,7 +164,7 @@ const Detail = props => {
 
               <div className="form-group col">
                 <label>退休日期</label>
-                <input type="text" name="tuixiuriqi" value={item.tuixiuriqi}
+                <input type="text" name="tuixiuriqi" value={item.tuixiuriqi || ''}
                     className="form-control"
                     onChange={handleChange}
                 />
@@ -193,7 +173,7 @@ const Detail = props => {
 
             <div className="form-group">
               <label>档案所在地</label>
-              <input type="text" name="suozaidi" value={item.suozaidi}
+              <input type="text" name="suozaidi" value={item.suozaidi || ''}
                   className="form-control"
                   onChange={handleChange}
               />
@@ -201,7 +181,7 @@ const Detail = props => {
 
             <div className="form-group">
               <label>备注</label>
-              <input type="text" name="remark" value={item.remark}
+              <input type="text" name="remark" value={item.remark || ''}
                   className="form-control"
                   onChange={handleChange}
               />
