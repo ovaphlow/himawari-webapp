@@ -9,6 +9,7 @@ import Detail from './Detail'
 import Capture from './Capture'
 import PictureList from './PictureList'
 import Picture from './Picture'
+import TransferOut from './TransferOut'
 
 const Index = () => {
   React.useEffect(() => {
@@ -30,6 +31,7 @@ const Index = () => {
             <Route path="/档案/:id/扫描" component={Capture} />
             <Route exact path="/档案/:id/图像" component={PictureList} />
             <Route path="/档案/:master_id/图像/:id"><Picture /></Route>
+            <Route path="/档案/:id/转出"><TransferOut /></Route>
           </Switch>
         </div>
       </>

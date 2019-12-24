@@ -4,10 +4,10 @@ function Toolbar(props) {
   return (
     <div className="mb-2">
       <div className="btn-group">
-        <button type="button" className="btn btn-sm btn-outline-warning">
+        <a href={`#档案/${props.id}/转出`} className="btn btn-sm btn-outline-warning">
           <i className="fa fa-fw fa-mail-forward"></i>
           转出
-        </button>
+        </a>
       </div>
 
       <div className="btn-group pull-right">
