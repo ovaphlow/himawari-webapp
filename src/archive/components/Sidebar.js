@@ -2,7 +2,7 @@ import React from 'react'
 
 const Sidebar = props => {
   return (
-    <div className="list-group shadow">
+    <div className="list-group">
       <h6 className="text-muted text-center mt-2">选择功能</h6>
 
       <a href="#档案/转入"

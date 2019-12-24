@@ -34,13 +34,13 @@ function PictureList() {
 
         <Toolbar id={id} />
 
-        <div className="card shadow mb-5">
+        <div className="card shadow">
           <div className="card-body">
             <div className="row row-cols-3">
               {dataPicture.map(it => (
-                <div className="col" key={it.id}>
+                <div className="col pb-3" key={it.id}>
                   <a href={`#档案/${it.master_id}/图像/${it.id}`}>
-                    <img src={it.content} alt={it.id} className="img-fluid" />
+                    <img src={it.content} alt={it.id} className="img-fluid rounded" />
                   </a>
                 </div>
               ))}

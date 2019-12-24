@@ -17,17 +17,20 @@ function Picture() {
         return
       }
       setData(res.content)
+      console.info(res.content)
     }
     fetchData()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handlePrevious = () => {
-    window.alert('上一张')
+    window.location = `#档案/${data.master_id}/图像/${data.prev_id}`
+    window.location.reload(true)
   }
 
   const handleNext = () => {
-    window.alert('下一张')
+    window.location = `#档案/${data.master_id}/图像/${data.next_id}`
+    window.location.reload(true)
   }
 
   return (
@@ -44,15 +47,31 @@ function Picture() {
 
         <div className="card shadow mb-5">
           <div className="card-header">
+            <div className="btn-group">
+              <button type="button" className="btn btn-sm btn-outline-dark"
+                onClick={() => window.location = `#档案/${data.master_id}/图像`}
+              >
+                返回
+              </button>
+            </div>
+
             <div className="btn-group pull-right">
-              <button type="button" className="btn btn-sm btn-outline-info" onClick={handlePrevious}>
-                <i className="fa fa-fw fa-arrow-left"></i>
-                上一张
-              </button>
-              <button type="button" className="btn btn-sm btn-outline-info" onClick={handleNext}>
-                <i className="fa fa-fw fa-arrow-right"></i>
-                下一张
-              </button>
+              {data.prev_id && (
+                <button type="button" className="btn btn-sm btn-outline-info"
+                  onClick={handlePrevious}
+                >
+                  <i className="fa fa-fw fa-arrow-left"></i>
+                  上一张
+                </button>
+              )}
+              {data.next_id && (
+                <button type="button" className="btn btn-sm btn-outline-info"
+                  onClick={handleNext}
+                >
+                  <i className="fa fa-fw fa-arrow-right"></i>
+                  下一张
+                </button>
+              )}
             </div>
           </div>
 
