@@ -29,7 +29,7 @@ const Save = () => {
     setItem(prev => ({ ...prev, birthday: b }))
   }
 
-  const handleSaveAndCapture = () => {
+  const handleSaveAndCapture = async () => {
     if (!!!item.sn || !!!item.identity || !!!item.name) {
       window.alert('请完整填写所需信息')
       return
@@ -38,6 +38,21 @@ const Save = () => {
       window.alert('身份证格式错误')
       return
     }
+
+    const response = await fetch(`/api/archive/check-valid`, {
+      method: 'PUT',
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify({
+        sn: item.sn,
+        identity: item.identity
+      })
+    })
+    const res = await response.json()
+    if (res.content.length > 0) {
+      window.alert('档案号或身份证与现有档案冲突')
+      return
+    }
+
     fetch(`/api/archive/`, {
       method: 'POST',
       headers: {
@@ -56,7 +71,7 @@ const Save = () => {
       .catch(err => window.console.error(err))
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!!!item.sn || !!!item.identity || !!!item.name) {
       window.alert('请完整填写所需信息')
       return
@@ -65,6 +80,21 @@ const Save = () => {
       window.alert('身份证格式错误')
       return
     }
+
+    const response = await fetch(`/api/archive/check-valid`, {
+      method: 'PUT',
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify({
+        sn: item.sn,
+        identity: item.identity
+      })
+    })
+    const res = await response.json()
+    if (res.content.length > 0) {
+      window.alert('档案号或身份证与现有档案冲突')
+      return
+    }
+
     fetch(`/api/archive/`, {
       method: 'POST',
       headers: {

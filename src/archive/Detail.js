@@ -42,7 +42,7 @@ const Detail = props => {
       .catch(err => window.console.error(err))
   }
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     if (!!!item.sn || !!!item.identity || !!!item.name) {
       window.alert('请完整填写所需信息')
       return
@@ -51,6 +51,26 @@ const Detail = props => {
       window.alert('身份证格式错误')
       return
     }
+
+    const response = await fetch(`/api/archive/check-valid-with-id`, {
+      method: 'PUT',
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify({
+        id: item.id,
+        sn: item.sn,
+        identity: item.identity
+      })
+    })
+    const res = await response.json()
+    if (res.message) {
+      window.alert(res.message)
+      return
+    }
+    if (res.content.length > 0) {
+      window.alert('档案号或身份证与现有档案冲突')
+      return
+    }
+
     fetch(`/api/archive/${item.id}`, {
       method: 'PUT',
       headers: {
@@ -87,16 +107,17 @@ const Detail = props => {
               <div className="form-group col-3">
                 <label>档案号</label>
                 <input type="text" name="sn" value={item.sn || ''}
-                    className="form-control"
-                    onChange={handleChange}
+                  className="form-control"
+                  onChange={handleChange}
                 />
               </div>
 
               <div className="form-group col">
                 <label>附加档案号</label>
                 <input type="text" name="sn_alt" value={item.sn_alt || ''}
-                    className="form-control"
-                    onChange={handleChange}
+                  className="form-control"
+                  onChange={handleChange}
+                  readOnly
                 />
               </div>
             </div>
@@ -105,8 +126,8 @@ const Detail = props => {
               <div className="form-group col">
                 <label>身份证</label>
                 <input type="text" name="identity" value={item.identity || ''}
-                    className="form-control"
-                    onChange={handleChange}
+                  className="form-control"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -172,14 +193,6 @@ const Detail = props => {
             </div>
 
             <div className="form-group">
-              <label>档案所在地</label>
-              <input type="text" name="suozaidi" value={item.suozaidi || ''}
-                  className="form-control"
-                  onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-group">
               <label>备注</label>
               <input type="text" name="remark" value={item.remark || ''}
                   className="form-control"
@@ -192,7 +205,7 @@ const Detail = props => {
 
           <div className="card-footer">
             <div className="btn-group">
-              <button type="button" className="btn btn-danger" onClick={handleRemove}>
+              <button type="button" className="btn btn-outline-danger" onClick={handleRemove}>
                 删除
               </button>
             </div>
