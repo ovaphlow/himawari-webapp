@@ -9,28 +9,28 @@ function Picture() {
   const [data, setData] = React.useState({})
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`/api/archive/${master_id}/picture/${id}`)
-      const res = await response.json()
-      if (res.message) {
-        window.alert(res.message)
-        return
-      }
-      setData(res.content)
-      console.info(res.content)
-    }
-    fetchData()
+    fetchData(id, master_id)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const fetchData = async (id, master_id) => {
+    const response = await fetch(`/api/archive/${master_id}/picture/${id}`)
+    const res = await response.json()
+    if (res.message) {
+      window.alert(res.message)
+      return
+    }
+    setData(res.content)
+  }
+
   const handlePrevious = () => {
     window.location = `#档案/${data.master_id}/图像/${data.prev_id}`
-    window.location.reload(true)
+    fetchData(data.prev_id, data.master_id)
   }
 
   const handleNext = () => {
     window.location = `#档案/${data.master_id}/图像/${data.next_id}`
-    window.location.reload(true)
+    fetchData(data.next_id, data.master_id)
   }
 
   return (
