@@ -10,6 +10,8 @@ import Capture from './Capture'
 import PictureList from './PictureList'
 import Picture from './Picture'
 import TransferOut from './TransferOut'
+import ListIsolate from './ListIsolate'
+import DetailIsolate from './DetailIsolate'
 
 const Index = () => {
   React.useEffect(() => {
@@ -27,6 +29,8 @@ const Index = () => {
           <Switch>
             <Route exact path="/档案/查询" component={Filter} />
             <Route exact path="/档案/转入" component={Save} />
+            <Route exact path="/档案/中转区"><ListIsolate /></Route>
+            <Route path="/档案/中转区/:id"><DetailIsolate /></Route>
             <Route exact path="/档案/:id" component={Detail} />
             <Route path="/档案/:id/扫描" component={Capture} />
             <Route exact path="/档案/:id/图像" component={PictureList} />

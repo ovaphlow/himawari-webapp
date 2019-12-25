@@ -25,7 +25,7 @@ const Sidebar = props => {
         </span>
       </a>
 
-      <a href="#档案/档案中转区"
+      <a href="#档案/中转区"
           className={`list-group-item list-group-item-action ${props.category === 'secondary-vault' ? 'active' : ''}`}
       >
         <i className="fa fa-fw fa-folder-open-o"></i>
