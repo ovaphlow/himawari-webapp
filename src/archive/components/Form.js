@@ -30,6 +30,7 @@ export default function Form(props) {
           <input type="text" name="identity" value={props.data.identity || ''}
             className="form-control"
             onChange={props.handleChange}
+            onBlur={props.handleIdentityBlur}
           />
         </div>
 
