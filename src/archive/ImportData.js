@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Sidebar from './components/Sidebar'
+import VaultPicker from '../mds/components/VaultPicker'
 
 export default function ImportData() {
+  const [data, setData] = useState({vault_id: 0})
+
+  const handleChange = e => {
+    const { value, name } = e.target
+    setData(prev => ({ ...prev, [name]: value }))
+  }
+
   const handleUpload = async () => {
     let formData = new FormData()
     let el = document.querySelector('#customFileLangHTML')
 
+    formData.append('vault_id', data.vault_id)
     formData.append('file', el.files[0])
 
     const response = await fetch(`/api/archive/import-data`, {
@@ -36,9 +45,20 @@ export default function ImportData() {
           </div>
 
           <div className="card-body">
-            <div className="custom-file">
-              <input type="file" className="custom-file-input" id="customFileLangHTML" />
-              <label className="custom-file-label" htmlFor="customFileLangHTML" data-browse="选择文件">后缀名为xlsx的Excel表格文件</label>
+            <div className="row">
+              <div className="col-4">
+                <VaultPicker name="vault_id" value={data.vault_id} handleChange={handleChange} />
+              </div>
+
+              <div className="col">
+                <div className="form-group">
+                  <label>&nbsp;</label>
+                  <div className="custom-file">
+                    <input type="file" className="custom-file-input" id="customFileLangHTML" />
+                    <label className="custom-file-label" htmlFor="customFileLangHTML" data-browse="选择文件">后缀名为xlsx的Excel表格文件</label>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
