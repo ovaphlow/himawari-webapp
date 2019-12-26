@@ -29,7 +29,17 @@ export default function ListIsolate() {
   }
 
   const handleFilter = async () => {
-    console.info(filterParams)
+    const response = await fetch(`/api/archive/isolate/filter`, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(filterParams)
+    })
+    const res = await response.json()
+    if (res.message) {
+      window.alert(res.message)
+      return
+    }
+    setData(res.content)
   }
 
   return (
