@@ -51,7 +51,7 @@ const Filter = () => {
   return (
     <div className="row mt-3">
       <div className="col-3 col-lg-2">
-        <Sidebar />
+        <Sidebar category="filter" />
       </div>
 
       <div className="col-9 col-lg-10">
