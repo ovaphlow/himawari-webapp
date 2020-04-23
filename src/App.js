@@ -7,7 +7,7 @@ import Mds from './mds'
 import TouchScreen from './touch-screen/Home'
 import APIAccessJournal from './api-access-journal/Home'
 
-const App = () => {
+export default function App() {
   return (
     <HashRouter>
       <Switch>
@@ -20,5 +20,3 @@ const App = () => {
     </HashRouter>
   )
 }
-
-export default App
