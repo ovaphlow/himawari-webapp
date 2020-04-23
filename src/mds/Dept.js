@@ -1,17 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Sidebar from './components/Sidebar'
 
-export const DeptPicker = props => {
-  const [list, setList] = React.useState([])
+export function DeptPicker(props) {
+  const [list, setList] = useState([])
 
-  React.useEffect(() => {
-    fetch(`/api/common/dept/`)
-      .then(response => response.json())
-      .then(res => {
-        setList(res.content)
-      })
-      .catch(err => window.console.error(err))
+  useEffect(() => {
+    ;(async () => {
+      const response = await window.fetch(`/api/common/dept/`)
+      const res = await response.json()
+      setList(res.content)
+    })()
   }, [])
 
   return (
@@ -29,25 +28,23 @@ export const DeptPicker = props => {
   )
 }
 
-const Toolbar = () => {
-  return (
-    <>
-      <div className="btn-group">
-        <a href="#数据管理/部门/新增" className="btn btn-success btn-sm">
-          <i className="fa fa-fw fa-plus"></i>
-          新增
-        </a>
-      </div>
+const Toolbar = () => (
+  <>
+    <div className="btn-group">
+      <a href="#数据管理/部门/新增" className="btn btn-success btn-sm">
+        <i className="fa fa-fw fa-plus"></i>
+        新增
+      </a>
+    </div>
 
-      <div className="btn-group pull-right">
-        <a href="#数据管理/部门" className="btn btn-secondary btn-sm">
-          <i className="fa fa-fw fa-list"></i>
-          列表
-        </a>
-      </div>
-    </>
-  )
-}
+    <div className="btn-group pull-right">
+      <a href="#数据管理/部门" className="btn btn-secondary btn-sm">
+        <i className="fa fa-fw fa-list"></i>
+        列表
+      </a>
+    </div>
+  </>
+)
 
 export const List = () => {
   const [list, setList] = React.useState([])
@@ -71,7 +68,7 @@ export const List = () => {
         <Sidebar />
       </div>
 
-      <div className="col-9">
+      <div className="col-9 col-lg-10">
         <h3 className="text-muted">
           <i className="fa fa-fw fa-sitemap"></i>
           部门
@@ -87,10 +84,10 @@ export const List = () => {
           </div>
 
           <div className="card-body">
-            <table className="table table-hover">
+            <table className="table table-hover table-bordered">
               <thead className="thead-dark">
                 <tr>
-                  <th>序号</th>
+                  <th className="text-right">序号</th>
                   <th>名称</th>
                   <th>用户数量</th>
                   <th>操作记录</th>

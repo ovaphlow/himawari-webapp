@@ -1,35 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Title from './components/Title'
 import Navbar from './components/Navbar'
 
-const Home = () => {
-  const [item, setItem] = React.useState({
-    keyword: ''
-  })
+export default function Home() {
+  const [keyword, setKeyword] = useState('')
 
-  const handleChange = e => {
-    const { value, name } = e.target;
-    setItem(prev => ({ ...prev, [name]: value }))
-  }
-
-  const handleSearch = () => {
-    fetch(`/api/archive/search`, {
+  const handleSearch = async () => {
+    const response = await window.fetch(`/api/archive/search`, {
       method: 'PUT',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(item)
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ keyword: keyword })
     })
-      .then(response => response.json())
-      .then(res => {
-        if (res.message) {
-          window.alert(res.message)
-          return
-        }
-        window.location = `#档案/${res.content.id}`
-      })
-      .catch(err => window.console.error(err))
+    const res = await response.json()
+    if (res.message) {
+      window.alert(res.message)
+      return
+    }
+    window.location = `#档案/${res.content.id}`
   }
 
   return (
@@ -43,9 +31,9 @@ const Home = () => {
           <div className="col-8 offset-2 text-center">
             <div className="form-group">
               <label className="lead">输入档案号或身份证</label>
-              <input type="text" name="keyword"
+              <input type="search" value={keyword || ''}
                 className="form-control form-control-lg text-center"
-                onChange={handleChange}
+                onChange={event => setKeyword(event.target.value)}
               />
             </div>
 
@@ -59,5 +47,3 @@ const Home = () => {
     </>
   )
 }
-
-export default Home

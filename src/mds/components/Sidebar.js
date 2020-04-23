@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Sidebar = props => {
+export default function Sidebar(props) {
   return (
-    <div className="list-group shadow">
+    <div className="list-group">
       <h6 className="text-muted text-center mt-2">选择功能</h6>
 
       <a href="#数据管理/操作记录"
@@ -47,5 +47,3 @@ const Sidebar = props => {
     </div>
   )
 }
-
-export default Sidebar

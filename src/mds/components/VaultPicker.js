@@ -1,23 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-const VaultPicker = props => {
-  const [data, setData] = React.useState([])
+export default function VaultPicker(props) {
+  const [data, setData] = useState([])
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      let result = await axios.get('/api/vault/')
-      setData(result.data.content)
-    }
-    fetchData()
+  useEffect(() => {
+    ;(async () => {
+      const res = await axios.get('/api/vault/')
+      setData(res.data.content)
+    })()
   }, [])
 
   return (
     <div className="form-group">
       <label>档案所在地</label>
       <select name={props.name || 'vault_id'} value={props.value || 0}
-          className="form-control"
-          onChange={props.handleChange}
+        className="form-control"
+        onChange={props.handleChange}
       >
         <option value="0">未选择</option>
         {
@@ -29,5 +28,3 @@ const VaultPicker = props => {
     </div>
   )
 }
-
-export default VaultPicker

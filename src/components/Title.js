@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Title = props => (
+const Title = () => (
   <h1 className="text-light title-color" style={{ marginTop: -48 }}>
     &nbsp;
     数字化档案
