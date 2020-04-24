@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Sidebar from './components/Sidebar'
 
-const JournalList = () => {
+export default function JournalList() {
+  const [list, setList] = useState([])
+
+  useEffect(() => {
+    setList([])
+  }, [])
+
   return (
     <div className="row mt-3">
       <div className="col-3 col-lg-2">
         <Sidebar />
       </div>
 
-      <div className="col-9">
+      <div className="col-9 col-lg-10">
         <h3 className="text-muted">
           <i className="fa fa-fw fa-history"></i>
           操作记录
@@ -23,10 +29,10 @@ const JournalList = () => {
           </div>
 
           <div className="card-body">
-            <table className="table table-hover">
-              <thead className="thead-light">
+            <table className="table table-hover table-bordered">
+              <thead className="thead-dark">
                 <tr>
-                  <th>序号</th>
+                  <th className="text-right">序号</th>
                   <th>日期</th>
                   <th>时间</th>
                   <th>用户</th>
@@ -36,7 +42,10 @@ const JournalList = () => {
               </thead>
 
               <tbody>
-
+                {list.map(it => (
+                  <tr key={it.id}>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -45,5 +54,3 @@ const JournalList = () => {
     </div>
   )
 }
-
-export default JournalList
