@@ -63,7 +63,7 @@ function List() {
         <Toolbar />
 
         <div className="card shadow mt-2">
-          <div className="card-header">
+          <div className="card-header" style={{ display: 'none' }}>
             查询条件
           </div>
 
