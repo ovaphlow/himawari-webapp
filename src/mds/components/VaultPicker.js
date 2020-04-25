@@ -14,9 +14,9 @@ export default function VaultPicker(props) {
   return (
     <div className="form-group">
       <label>档案所在地</label>
-      <select name={props.name || 'vault_id'} value={props.value || 0}
+      <select name={props.name || 'vault_id'} value={props.value}
         className="form-control"
-        onChange={props.handleChange}
+        onChange={props.onChange}
       >
         <option value="0">未选择</option>
         {

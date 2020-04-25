@@ -1,92 +1,122 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import Sidebar from './components/Sidebar'
 import Toolbar from './components/Toolbar'
-import Form from './components/Form'
+import VaultPicker from '../mds/components/VaultPicker'
 
-const Detail = props => {
-  const [item, setItem] = React.useState({})
+export default function Detail(props) {
+  const { id } = useParams()
+  const [sn, setSN] = useState('')
+  const [sn_alt, setSNAlt] = useState('')
+  const [identity, setIdentity] = useState('')
+  const [name, setName] = useState('')
+  const [birthday, setBirthday] = useState('')
+  const [cangongshijian, setCangongshijian] = useState('')
+  const [zhicheng, setZhicheng] = useState('')
+  const [gongling, setGongling] = useState('')
+  const [yutuixiuriqi, setYutuixiuriqi] = useState('')
+  const [tuixiuriqi, setTuixiuriqi] = useState('')
+  const [phone, setPhone] = useState('')
+  const [remark, setRemark] = useState('')
+  const [vault_id, setVaultID] = useState(0)
 
-  React.useEffect(() => {
-    fetch(`/api/archive/${props.match.params.id}`)
-      .then(response => response.json())
-      .then(res => {
-        if (res.message) {
-          window.alert(res.message)
-          return
-        }
-        setItem(res.content)
-      })
-      .catch(err => window.console.error(err))
+  useEffect(() => {
+    if (props.category === '编辑') {
+      ;(async id => {
+        const response = await window.fetch(`/api/archive/${id}`)
+        const res = await response.json()
+        setSN(res.content.sn)
+        setSNAlt(res.content.sn_alt)
+        setIdentity(res.content.identity)
+        setName(res.content.name)
+        setBirthday(res.content.birthday)
+        setCangongshijian(res.content.cangongshijian)
+        setZhicheng(res.content.zhicheng)
+        setGongling(res.content.gongling)
+        setYutuixiuriqi(res.content.yutuixiuriqi)
+        setTuixiuriqi(res.content.tuixiuriqi)
+        setPhone(res.content.phone)
+        setRemark(res.content.remark)
+        setVaultID(res.content.vault_id)
+      })(id)
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleChange = e => {
-    const { value, name } = e.target
-    setItem(prev => ({ ...prev, [name]: value }))
+  const handleIdentityBlur = () => {
+    let b = `${identity.slice(6, 10)}-${identity.slice(10, 12)}-${identity.slice(12, 14)}`
+    setBirthday(b)
   }
 
-  const handleRemove = () => {
+  const handleRemove = async () => {
     if (!!!window.confirm('确定要删除当前数据？')) return
-    fetch(`/api/archive/${item.id}`, {
+    const response = await window.fetch(`/api/archive/${id}`, {
       method: 'DELETE'
-    })
-      .then(response => response.json())
-      .then(res => {
-        if (res.message) {
-          window.alert(res.message)
-          return
-        }
-        window.location = '#档案/查询'
-      })
-      .catch(err => window.console.error(err))
-  }
-
-  const handleUpdate = async () => {
-    if (!!!item.sn || !!!item.identity || !!!item.name) {
-      window.alert('请完整填写所需信息')
-      return
-    }
-    if (item.identity.length !== 18) {
-      window.alert('身份证格式错误')
-      return
-    }
-
-    const response = await fetch(`/api/archive/check-valid-with-id`, {
-      method: 'PUT',
-      headers: {'content-type': 'application/json'},
-      body: JSON.stringify({
-        id: item.id,
-        sn: item.sn,
-        identity: item.identity
-      })
     })
     const res = await response.json()
     if (res.message) {
       window.alert(res.message)
       return
     }
-    if (res.content.length > 0) {
-      window.alert('档案号或身份证与现有档案冲突')
+    window.history.go(-1)
+  }
+
+  const handleSave = async () => {
+    if (!!!sn || !!!identity || !!!name) {
+      window.alert('请完整填写所需信息')
+      return
+    }
+    if (identity.length !== 18) {
+      window.alert('身份证长度错误')
       return
     }
 
-    fetch(`/api/archive/${item.id}`, {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(item)
-    })
-      .then(response => response.json())
-      .then(res => {
-        if (res.message) {
-          window.alert(res.message)
-          return
-        }
-        window.location.reload(true)
+    const data = {
+      sn: sn,
+      sn_alt: sn_alt,
+      identity: identity,
+      name: name,
+      birthday: birthday,
+      cangongshijian: cangongshijian,
+      zhicheng: zhicheng,
+      gongling: gongling,
+      yutuixiuriqi: yutuixiuriqi,
+      tuixiuriqi: tuixiuriqi,
+      phone: phone,
+      remark: remark,
+      vault_id: vault_id
+    }
+
+    if (props.category === '编辑') {
+      let response = await window.fetch(`/api/archive/check-valid-with-id`, {
+        method: 'PUT',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(Object.assign({ id: id }, data))
       })
-      .catch(err => window.console.error(err))
+      let res = await response.json()
+      if (res.message) {
+        window.alert(res.message)
+        return
+      }
+      console.info(res)
+      if (res.content.length > 0) {
+        window.alert('档案号或身份证与现有档案冲突')
+        return
+      }
+
+      response = await window.fetch(`/api/archive/${id}`, {
+        method: 'PUT',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      res = await response.json()
+      if (res.message) {
+        window.alert(res.message)
+        return
+      }
+      window.location.reload(true)
+    }
   }
 
   return (
@@ -96,27 +126,148 @@ const Detail = props => {
       </div>
 
       <div className="col-9 col-lg-10">
-        <h3 className="text-muted">查看档案</h3>
+        <h3 className="text-muted">{props.category} 档案</h3>
         <hr />
 
-        <Toolbar id={item.id} />
+        {props.category === '编辑' && (
+          <Toolbar id={id} />
+        )}
 
         <div className="card shadow">
           <div className="card-body">
-            <Form data={item} handleChange={handleChange} />
+            <div className="row">
+              <div className="form-group col-3">
+                <label>档案号</label>
+                <input type="text" name="sn" value={sn || ''}
+                  className="form-control"
+                  onChange={event => setSN(event.target.value)}
+                />
+              </div>
+
+              <div className="form-group col">
+                <label>附加档案号</label>
+                <input type="text" name="sn_alt" value={sn_alt || ''}
+                  className="form-control"
+                  onChange={event => setSNAlt(event.target.value)}
+                  readOnly
+                />
+              </div>
+
+              <div className="col-3">
+                <VaultPicker name="vault_id" value={vault_id}
+                  onChange={event => setVaultID(event.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="form-group col">
+                <label>身份证</label>
+                <input type="text" name="identity" value={identity || ''}
+                  className="form-control"
+                  onChange={event => setIdentity(event.target.value)}
+                  onBlur={handleIdentityBlur}
+                />
+              </div>
+
+              <div className="form-group col">
+                <label>姓名</label>
+                <input type="text" name="name" value={name || ''}
+                  className="form-control"
+                  onChange={event => setName(event.target.value)}
+                />
+              </div>
+
+              <div className="form-group col">
+                <label>出生日期</label>
+                <input type="text" value={birthday || ''}
+                  className="form-control"
+                  onChange={event => setBirthday(event.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="form-group col">
+                <label>参加工作时间</label>
+                <input type="text" value={cangongshijian || ''}
+                  className="form-control"
+                  onChange={event => setCangongshijian(event.target.value)}
+                />
+              </div>
+
+              <div className="form-group col">
+                <label>职称</label>
+                <input type="text" name="zhicheng" value={zhicheng || ''}
+                  className="form-control"
+                  onChange={event => setZhicheng(event.target.value)}
+                />
+              </div>
+
+              <div className="form-group col">
+                <label>工龄</label>
+                <input type="text" value={gongling || ''}
+                  className="form-control"
+                  onChange={event => setGongling(event.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="form-group col">
+                <label>预退休日期</label>
+                <input type="text" value={yutuixiuriqi || ''}
+                  className="form-control"
+                  onChange={event => setYutuixiuriqi(event.target.value)}
+                />
+              </div>
+
+              <div className="form-group col">
+                <label>退休日期</label>
+                <input type="text" value={tuixiuriqi || ''}
+                  className="form-control"
+                  onChange={event => setTuixiuriqi(event.target.value)}
+                />
+              </div>
+
+              <div className="form-group col">
+                <label>联系电话</label>
+                <input type="text" value={phone || ''}
+                  className="form-control"
+                  onChange={event => setPhone(event.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>备注</label>
+              <input type="text" name="remark" value={remark || ''}
+                className="form-control"
+                onChange={event => setRemark(event.target.value)}
+              />
+            </div>
           </div>
 
           <div className="card-footer">
             <div className="btn-group">
-              <button type="button" className="btn btn-outline-danger" onClick={handleRemove}>
-                删除
+              <button type="button" className="btn btn-outline-secondary"
+                onClick={() => window.history.go(-1)}
+              >
+                返回
               </button>
             </div>
 
             <div className="btn-group pull-right">
-              <button type="button" className="btn btn-primary" onClick={handleUpdate}>
+              {props.category === '编辑' && (
+                <button type="button" className="btn btn-outline-danger" onClick={handleRemove}>
+                  <i className="fa fa-fw fa-trash-o"></i>
+                  删除
+                </button>
+              )}
+
+              <button type="button" className="btn btn-primary" onClick={handleSave}>
                 <i className="fa fa-fw fa-check"></i>
-                确定
+                保存
               </button>
             </div>
           </div>
@@ -125,5 +276,3 @@ const Detail = props => {
     </div>
   )
 }
-
-export default Detail
