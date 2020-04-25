@@ -12,6 +12,7 @@ export default function Detail(props) {
   const [identity, setIdentity] = useState('')
   const [name, setName] = useState('')
   const [birthday, setBirthday] = useState('')
+  const [gender, setGender] = useState('')
   const [cangongshijian, setCangongshijian] = useState('')
   const [zhicheng, setZhicheng] = useState('')
   const [gongling, setGongling] = useState('')
@@ -31,6 +32,7 @@ export default function Detail(props) {
         setIdentity(res.content.identity)
         setName(res.content.name)
         setBirthday(res.content.birthday)
+        setGender(res.content.gender)
         setCangongshijian(res.content.cangongshijian)
         setZhicheng(res.content.zhicheng)
         setGongling(res.content.gongling)
@@ -78,6 +80,7 @@ export default function Detail(props) {
       identity: identity,
       name: name,
       birthday: birthday,
+      gender: gender,
       cangongshijian: cangongshijian,
       zhicheng: zhicheng,
       gongling: gongling,
@@ -88,7 +91,30 @@ export default function Detail(props) {
       vault_id: vault_id
     }
 
-    if (props.category === '编辑') {
+    if (props.category === '转入') {
+      let res = await fetch(`/api/archive/check-valid`, {
+        method: 'PUT',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(data)
+      })
+      res = await res.json()
+      if (res.content.length > 0) {
+        window.alert('档案号或身份证与现有档案冲突')
+        return
+      }
+
+      res = await window.fetch(`/api/archive/`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      res = await res.json()
+      if (res.message) {
+        window.alert(res.message)
+        return
+      }
+      window.location = '#档案/查询'
+    } else if (props.category === '编辑') {
       let response = await window.fetch(`/api/archive/check-valid-with-id`, {
         method: 'PUT',
         headers: {'content-type': 'application/json'},
@@ -99,7 +125,6 @@ export default function Detail(props) {
         window.alert(res.message)
         return
       }
-      console.info(res)
       if (res.content.length > 0) {
         window.alert('档案号或身份证与现有档案冲突')
         return
@@ -117,6 +142,57 @@ export default function Detail(props) {
       }
       window.location.reload(true)
     }
+  }
+
+  const handleSaveAndCapture = async () => {
+    if (!!!sn || !!!identity || !!!name) {
+      window.alert('请完整填写所需信息')
+      return
+    }
+    if (identity.length !== 18) {
+      window.alert('身份证长度错误')
+      return
+    }
+
+    const data = {
+      sn: sn,
+      sn_alt: sn_alt,
+      identity: identity,
+      name: name,
+      birthday: birthday,
+      gender: gender,
+      cangongshijian: cangongshijian,
+      zhicheng: zhicheng,
+      gongling: gongling,
+      yutuixiuriqi: yutuixiuriqi,
+      tuixiuriqi: tuixiuriqi,
+      phone: phone,
+      remark: remark,
+      vault_id: vault_id
+    }
+
+    let response = await fetch(`/api/archive/check-valid`, {
+      method: 'PUT',
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify(data)
+    })
+    let res = await response.json()
+    if (res.content.length > 0) {
+      window.alert('档案号或身份证与现有档案冲突')
+      return
+    }
+
+    response = await window.fetch(`/api/archive/`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    res = await response.json()
+    if (res.message) {
+      window.alert(res.message)
+      return
+    }
+    window.location = `#档案/${res.content}/扫描`
   }
 
   return (
@@ -184,6 +260,17 @@ export default function Detail(props) {
                   className="form-control"
                   onChange={event => setBirthday(event.target.value)}
                 />
+              </div>
+
+              <div className="form-group col">
+                <label>性别</label>
+                <select className="form-control" value={gender || ''}
+                  onChange={event => setGender(event.target.value)}
+                >
+                  <option value="">未选择</option>
+                  <option value="女">女</option>
+                  <option value="男">男</option>
+                </select>
               </div>
             </div>
 
@@ -258,6 +345,13 @@ export default function Detail(props) {
             </div>
 
             <div className="btn-group pull-right">
+              {props.category === '转入' && (
+                <button type="button" className="btn btn-success" onClick={handleSaveAndCapture}>
+                  <i className="fa fa-fw fa-camera"></i>
+                  保存并扫描档案
+                </button>
+              )}
+
               {props.category === '编辑' && (
                 <button type="button" className="btn btn-outline-danger" onClick={handleRemove}>
                   <i className="fa fa-fw fa-trash-o"></i>

@@ -3,7 +3,6 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Title from '../components/Title'
 import Navbar from '../components/Navbar'
-import Save from './Save'
 import Filter from './Filter'
 import Detail from './Detail'
 import Capture from './Capture'
@@ -29,7 +28,7 @@ export default function Index() {
         <div className="container-fluid">
           <Switch>
             <Route exact path="/档案/查询"><Filter /></Route>
-            <Route exact path="/档案/转入"><Save /></Route>
+            <Route exact path="/档案/转入"><Detail category="转入" /></Route>
             <Route exact path="/档案/中转区"><ListIsolate /></Route>
             <Route exact path="/档案/中转区/:id"><DetailIsolate /></Route>
             <Route exact path="/档案/导入"><ImportData /></Route>
