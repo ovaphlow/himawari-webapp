@@ -1,5 +1,5 @@
-import React from 'react'
-import { HashRouter, Switch, Route } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Title from '../components/Title'
 import Navbar from '../components/Navbar'
@@ -14,13 +14,13 @@ import ListIsolate from './ListIsolate'
 import DetailIsolate from './DetailIsolate'
 import ImportData from './ImportData'
 
-const Index = () => {
-  React.useEffect(() => {
+export default function Index() {
+  useEffect(() => {
     console.info('权限验证')
   }, [])
 
   return (
-    <HashRouter>
+    <Router>
       <>
         <Title />
 
@@ -28,21 +28,19 @@ const Index = () => {
 
         <div className="container-fluid">
           <Switch>
-            <Route exact path="/档案/查询" component={Filter} />
-            <Route exact path="/档案/转入" component={Save} />
+            <Route exact path="/档案/查询"><Filter /></Route>
+            <Route exact path="/档案/转入"><Save /></Route>
             <Route exact path="/档案/中转区"><ListIsolate /></Route>
             <Route path="/档案/中转区/:id"><DetailIsolate /></Route>
             <Route path="/档案/导入"><ImportData /></Route>
-            <Route exact path="/档案/:id" component={Detail} />
-            <Route path="/档案/:id/扫描" component={Capture} />
-            <Route exact path="/档案/:id/图像" component={PictureList} />
+            <Route exact path="/档案/:id"><Detail /></Route>
+            <Route path="/档案/:id/扫描"><Capture /></Route>
+            <Route exact path="/档案/:id/图像"><PictureList /></Route>
             <Route path="/档案/:master_id/图像/:id"><Picture /></Route>
             <Route path="/档案/:id/转出"><TransferOut /></Route>
           </Switch>
         </div>
       </>
-    </HashRouter>
+    </Router>
   )
 }
-
-export default Index
