@@ -118,7 +118,7 @@ function Detail(props) {
   }, [])
 
   const handleSave = async () => {
-    if (!!!name || !!!phone || addr) {
+    if (!!!name || !!!phone || !!!addr) {
       window.alert('请完整填写所需信息')
       return
     }
@@ -130,7 +130,7 @@ function Detail(props) {
     if (props.category === '新增') {
       const response = await window.fetch(`/api/vault/`, {
         method: 'POST',
-        headers: { 'content-typye': 'application/json' },
+        headers: { 'content-type': 'application/json' },
         body: JSON.stringify(data)
       })
       const res = await response.json()
@@ -142,7 +142,7 @@ function Detail(props) {
     } else if (props.category === '编辑') {
       const response = await window.fetch(`/api/vault/${id}`, {
         method: 'PUT',
-        headers: { 'content-type': 'appliation/json' },
+        headers: { 'content-type': 'application/json' },
         body: JSON.stringify(data)
       })
       const res = await response.json()

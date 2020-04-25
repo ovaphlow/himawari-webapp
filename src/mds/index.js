@@ -25,7 +25,7 @@ export default function Index() {
             <Route path="/数据管理/操作记录"><JournalList /></Route>
             <Route path="/数据管理/用户"><UserRouter /></Route>
             <Route path="/数据管理/部门"><DeptRouter /></Route>
-            <Route exact path="/数据管理/档案库"><VaultRouter /></Route>
+            <Route path="/数据管理/档案库"><VaultRouter /></Route>
           </Switch>
         </div>
       </>

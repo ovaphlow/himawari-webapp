@@ -61,7 +61,6 @@ function List() {
   const [list, setList] = useState([])
 
   useEffect(() => {
-    console.info(1)
     ;(async () => {
       const response = await window.fetch(`/api/common/dept/`)
       const res = await response.json()
